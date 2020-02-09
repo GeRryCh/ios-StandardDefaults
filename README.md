@@ -24,3 +24,16 @@ if let anyEnum: AnyEnum = StandardDefaults["com.enum.example"] {
     print(ido)
 }
 ```
+
+### Dynamic Member Lookup support
+StandardDefaults also supports this nice [feature of Swift language](https://www.hackingwithswift.com/articles/55/how-to-use-dynamic-member-lookup-in-swift).
+This means you can access saved value directly bypassing the subscript syntax.
+
+```Swift
+StandardDefaults["name"] = "German"
+if let name = StandardDefaults<String>.name {
+    print(name)
+}
+```
+
+

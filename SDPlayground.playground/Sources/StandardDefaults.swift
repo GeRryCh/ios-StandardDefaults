@@ -1,6 +1,6 @@
 import Foundation
 
-extension UserDefaults {
+public extension UserDefaults {
     subscript<T>(key: String) -> T? {
         get {
             return value(forKey: key) as? T
@@ -23,8 +23,9 @@ extension UserDefaults {
     }
 }
 
-public enum StandardDefaults {
-    public static subscript<T>(key: String) -> T? {
+@dynamicMemberLookup
+public enum StandardDefaults<T> {
+    public static subscript(key: String) -> T? {
         get {
             return UserDefaults.standard[key]
         }
@@ -33,7 +34,13 @@ public enum StandardDefaults {
         }
     }
     
-    public static subscript<T: RawRepresentable>(key: String) -> T? {
+    public static subscript(dynamicMember key: String) -> T? {
+        return StandardDefaults<T>[key]
+    }
+}
+
+extension StandardDefaults where T: RawRepresentable {
+    public static subscript(key: String) -> T? {
         get {
             return UserDefaults.standard[key]
         }
